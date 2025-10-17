@@ -7,19 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
-    <!-- Bootstrap 5 CDN -->
+    <!-- Bootstrap 5 via CDN: fornece estilos e componentes usados no template -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS estático do projeto (resolve caminho via tag static do Django) -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body class="dark bg-light d-flex align-items-center justify-content-center vh-100">
 
+    <!-- Card centralizado: área principal da página inicial com botão para cadastro -->
     <div class="card shadow-sm p-4 text-center" style="width: 100%; max-width: 400px;">
         <h1 class="h4 mb-3">Bem-vindo</h1>
+
+        <!-- Link para a view de cadastro; usa nome da URL definida no urls.py -->
         <a href="{% url 'register' %}" class="btn btn-primary">Ir para cadastro</a>
     </div>
 
+    <!-- livereload_script: injeta script de live-reload durante desenvolvimento (se instalado) -->
     {% livereload_script %}
 
+    <!-- Script do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
