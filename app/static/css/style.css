@@ -1,0 +1,120 @@
+/* Dark theme styles for the app */
+:root{
+  --bg: #0b1220; /* page background */
+  --card: #0f1724; /* card background */
+  --muted: #9aa6bd; /* muted text */
+  --text: #e6eef8; /* main text */
+  --accent: #2563eb; /* primary button */
+  --accent-2: #06b6d4; /* secondary accent */
+  --input-bg: #0b1228;
+  --border: #1f2a3a;
+  --error-bg: #3a1f1f;
+  --success-bg: #163d24;
+}
+
+body.page{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg), #07101a 80%);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  margin:0;
+}
+
+.card{
+  background:var(--card);
+  padding:26px 28px;
+  border-radius:10px;
+  box-shadow:0 8px 30px rgba(2,6,23,0.6);
+  width:420px;
+  max-width:94%;
+  border:1px solid var(--border);
+}
+
+.home-card{ text-align:center }
+
+h1{ margin-top:0; margin-bottom:14px; font-size:20px; color:var(--text) }
+
+.form .field{ margin-bottom:12px }
+.form label{ display:block; margin-bottom:6px; color:var(--muted); font-size:13px }
+.form input{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--input-bg); color:var(--text) }
+.form input::placeholder{ color: #6a7a8a }
+
+.actions{ text-align:right }
+
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.btn:hover{ filter:brightness(1.05) }
+
+.messages{ list-style:none; padding:0; margin:0 0 12px 0 }
+.messages li{ padding:10px 12px; border-radius:8px; margin-bottom:8px; color:var(--text) }
+.msg-error{ background: linear-gradient(90deg, rgba(58,31,31,0.9), rgba(30,12,12,0.7)); border:1px solid #7a2b2b }
+.msg-success{ background: linear-gradient(90deg, rgba(22,61,36,0.9), rgba(10,40,22,0.7)); border:1px solid #1e6b3e }
+
+.back{ margin-top:14px; text-align:left }
+.back a{ color:var(--accent-2); text-decoration:none }
+.back a:hover{ text-decoration:underline }
+
+/* small responsive tweaks */
+@media (max-width:480px){
+  .card{ width:92%; padding:18px }
+}
+/* Simple clean styles for the small app */
+body.page{
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f6fb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  margin:0;
+}
+
+.card{
+  background:#fff;
+  padding:24px 28px;
+  border-radius:8px;
+  box-shadow:0 6px 20px rgba(30,50,100,0.08);
+  width:360px;
+  max-width:95%;
+}
+
+.home-card{ text-align:center }
+
+h1{ margin-top:0; margin-bottom:12px; font-size:20px }
+
+.form .field{ margin-bottom:12px }
+.form label{ display:block; margin-bottom:6px; color:#333 }
+.form input{ width:100%; padding:8px 10px; border:1px solid #d8e0eb; border-radius:6px }
+
+.actions{ text-align:right }
+
+.btn{
+  display:inline-block;
+  background:#2b6cff;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  border:none;
+}
+
+.btn:hover{ opacity:0.95 }
+
+.messages{ list-style:none; padding:0; margin:0 0 12px 0 }
+.messages li{ padding:8px 10px; border-radius:6px; margin-bottom:6px }
+.msg-error{ background:#ffecec; color:#a33 }
+.msg-success{ background:#e6ffed; color:#1a7f3a }
+
+.back{ margin-top:12px; text-align:left }
