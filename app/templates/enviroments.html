@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ambientes</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+	<h1 class="mb-4">Ambientes</h1>
+
+	<form class="mb-3" method="get">
+		<div class="input-group">
+			<input type="search" name="q" value="{{ q }}" class="form-control" placeholder="Pesquisar por nome ou localização">
+			<button class="btn btn-outline-secondary" type="submit">Buscar</button>
+		</div>
+	</form>
+
+	<div class="row">
+		{% for env in page_obj %}
+			<div class="col-md-6 mb-3">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">{{ env.name }}</h5>
+						<h6 class="card-subtitle mb-2 text-muted">{{ env.get_type_display }} — {{ env.location }}</h6>
+						<p class="card-text">Capacidade: {{ env.capacity|default:"—" }} | Status: {{ env.get_status_display }}</p>
+						<a href="{% url 'environment_detail' env.pk %}" class="btn btn-sm btn-outline-primary">Ver detalhes</a>
+
+						{% if request.user.is_authenticated %}
+							{% if request.user.profile.role != 'admin' and env.status == 'ativo' %}
+								<form method="post" action="{% url 'environment_request_create' env.pk %}" class="d-inline">
+									{% csrf_token %}
+									<button class="btn btn-sm btn-success">Pedir uso</button>
+								</form>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% empty %}
+			<p>Nenhum ambiente encontrado.</p>
+		{% endfor %}
+	</div>
+
+	<nav>
+		<ul class="pagination">
+			{% if page_obj.has_previous %}
+				<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}">Anterior</a></li>
+			{% else %}
+				<li class="page-item disabled"><span class="page-link">Anterior</span></li>
+			{% endif %}
+			<li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+			{% if page_obj.has_next %}
+				<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}">Próxima</a></li>
+			{% else %}
+				<li class="page-item disabled"><span class="page-link">Próxima</span></li>
+			{% endif %}
+		</ul>
+	</nav>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

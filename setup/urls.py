@@ -16,10 +16,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app import views
+from app import views as app_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('register/', views.register, name='register'),
+
+    # rotas do app (mínimas, centralizadas aqui para não modificar muito)
+    path('', app_views.home, name='home'),
+    path('register/', app_views.register, name='register'),
+
+    # ambientes
+    path('environments/', app_views.environment_list, name='environment_list'),
+    path('environments/create/', app_views.environment_create, name='environment_create'),
+    path('environments/<int:pk>/', app_views.environment_detail, name='environment_detail'),
+    path('environments/<int:pk>/edit/', app_views.environment_update, name='environment_update'),
+    path('environments/<int:pk>/delete/', app_views.environment_delete, name='environment_delete'),
+    path('environments/<int:pk>/request/', app_views.environment_request_create, name='environment_request_create'),
+
+    # equipamentos
+    path('equipments/', app_views.equipment_list, name='equipment_list'),
+    path('equipments/create/', app_views.equipment_create, name='equipment_create'),
+    path('equipments/<int:pk>/', app_views.equipment_detail, name='equipment_detail'),
+    path('equipments/<int:pk>/edit/', app_views.equipment_update, name='equipment_update'),
+    path('equipments/<int:pk>/delete/', app_views.equipment_delete, name='equipment_delete'),
+
 ]
