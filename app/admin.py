@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Environment, Equipment, EnvironmentRequest
+from .models import Profile, Environment, Equipment, EnvironmentRequest, EquipmentTransfer
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
@@ -9,15 +9,43 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Environment)
 class EnvironmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'location', 'capacity', 'status')
+    list_display = ('name', 'type', 'location', 'capacity', 'status', 'ativo', 'created_by', 'updated_by')
     search_fields = ('name', 'location')
-    list_filter = ('type', 'status')
+    list_filter = ('type', 'status', 'ativo')
+    actions = ['mark_inactive', 'mark_active']
+
+    def mark_inactive(self, request, queryset):
+        queryset.update(ativo=False)
+        self.message_user(request, 'Ambientes marcados como inativos.')
+    mark_inactive.short_description = 'Marcar selecionados como inativos'
+
+    def mark_active(self, request, queryset):
+        queryset.update(ativo=True)
+        self.message_user(request, 'Ambientes marcados como ativos.')
+    mark_active.short_description = 'Marcar selecionados como ativos'
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'brand', 'model', 'serial_number', 'condition', 'environment')
+    list_display = ('name', 'brand', 'model', 'serial_number', 'condition', 'environment', 'ativo', 'created_by', 'updated_by')
     search_fields = ('name', 'brand', 'serial_number')
-    list_filter = ('condition', 'environment')
+    list_filter = ('condition', 'environment', 'ativo')
+    actions = ['mark_inactive', 'mark_active']
+
+    def mark_inactive(self, request, queryset):
+        queryset.update(ativo=False)
+        self.message_user(request, 'Equipamentos marcados como inativos.')
+    mark_inactive.short_description = 'Marcar selecionados como inativos'
+
+    def mark_active(self, request, queryset):
+        queryset.update(ativo=True)
+        self.message_user(request, 'Equipamentos marcados como ativos.')
+    mark_active.short_description = 'Marcar selecionados como ativos'
+
+@admin.register(EquipmentTransfer)
+class EquipmentTransferAdmin(admin.ModelAdmin):
+    list_display = ('equipment', 'from_environment', 'to_environment', 'transferred_by', 'transferred_at')
+    search_fields = ('equipment__name', 'equipment__serial_number')
+    list_filter = ('from_environment', 'to_environment')
 
 @admin.register(EnvironmentRequest)
 class EnvironmentRequestAdmin(admin.ModelAdmin):

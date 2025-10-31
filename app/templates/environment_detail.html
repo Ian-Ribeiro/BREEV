@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="card">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'environment_list' %}">Ambientes</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ environment.name }}</li>
+    </ol>
+  </nav>
+  <h2>{{ environment.name }}</h2>
+  <p>Tipo: {{ environment.get_type_display }}</p>
+  <p>Localização: {{ environment.location }}</p>
+  <p>Capacidade: {{ environment.capacity }}</p>
+  <p>Status: {{ environment.get_status_display }}</p>
+  <p>{{ environment.descricao }}</p>
+  <div class="back"><a href="{% url 'environment_list' %}">Voltar à lista</a></div>
+</div>
+
+<div class="card">
+  <h3>Equipamentos</h3>
+  <ul>
+    {% for eq in equipments %}
+      <li><a href="{% url 'equipment_detail' eq.pk %}">{{ eq.name }}</a> — {{ eq.brand }} {{ eq.model }} ({{ eq.get_condition_display }})</li>
+    {% empty %}
+      <li>Nenhum equipamento cadastrado neste ambiente.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

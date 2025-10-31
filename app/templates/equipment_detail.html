@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="card">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'equipment_list' %}">Equipamentos</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ equipment.name }}</li>
+    </ol>
+  </nav>
+  <h2>{{ equipment.name }}</h2>
+  <p>Marca: {{ equipment.brand }}</p>
+  <p>Modelo: {{ equipment.model }}</p>
+  <p>Número de série: {{ equipment.serial_number }}</p>
+  <p>Condição: {{ equipment.get_condition_display }}</p>
+  <p>Ambiente: {% if equipment.environment %}<a href="{% url 'environment_detail' equipment.environment.pk %}">{{ equipment.environment.name }}</a>{% else %}Sem ambiente{% endif %}</p>
+  <div class="back"><a href="{% url 'equipment_list' %}">Voltar à lista</a></div>
+</div>
+{% endblock %}

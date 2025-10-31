@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="card">
+  <h2>Equipamentos</h2>
+  <div class="back"><a href="{% url 'environment_list' %}">Voltar</a></div>
+  <ul>
+    {% for eq in page_obj %}
+      <li><a href="{% url 'equipment_detail' eq.pk %}">{{ eq.name }}</a> — {{ eq.brand }} {{ eq.model }} — {{ eq.serial_number }}</li>
+    {% empty %}
+      <li>Nenhum equipamento encontrado.</li>
+    {% endfor %}
+  </ul>
+  <div class="pagination">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Anterior</a>{% endif %}
+    <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Próxima</a>{% endif %}
+  </div>
+</div>
+{% endblock %}

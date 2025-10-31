@@ -11,6 +11,7 @@ Explicação rápida:
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -57,8 +58,13 @@ def register(request):
             try:
                 # Cria o usuário com as credenciais fornecidas
                 user = form.save()
+                # autentica e loga o usuário automaticamente para evitar redirecionamento ao login
+                raw_password = form.cleaned_data.get('password')
+                user = authenticate(request, username=user.username, password=raw_password)
+                if user is not None:
+                    login(request, user)
                 # Mensagem exibida no template (alert bootstrap)
-                messages.success(request, 'Usuário criado com sucesso.')
+                messages.success(request, 'Usuário criado e autenticado com sucesso.')
                 # redireciona para listagem de ambientes após cadastro
                 return redirect('environment_list')
             except IntegrityError as e:

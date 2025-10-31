@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="card">
+  <h2>{% if environment %}Editar Ambiente{% else %}Criar Ambiente{% endif %}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn-custom" type="submit">Salvar</button>
+    <a class="back" href="{% if environment %}{% url 'environment_detail' environment.pk %}{% else %}{% url 'environment_list' %}{% endif %}">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
