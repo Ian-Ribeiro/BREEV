@@ -246,9 +246,17 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
 '''
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
-
 User = get_user_model()
 user = User.objects.get(username='joao')  # exemplo
 perm = Permission.objects.get(codename='add_environment')  # ou 'manage_environments' se criou custom
 user.user_permissions.add(perm)
+'''
+
+'''
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
+User = get_user_model()
+u = User.objects.get(username='seu_usuario')
+perm = Permission.objects.get(codename='add_equipment')
+u.user_permissions.add(perm)
 '''
